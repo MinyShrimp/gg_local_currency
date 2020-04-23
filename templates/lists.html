@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<head>
+    <!-- config -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <title> 경기지역화폐 가맹점 </title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/font.css') }}" rel="stylesheet">
+    <style type="text/css">
+        .no-drag {
+            -ms-user-select: none;
+            -moz-user-select: -moz-none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+    <!-- js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+</head>
+
+<body class='text-center no-drag'>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style='background: lightblue;'>
+        <div style='font-family: TTTogether; font-size: 2em;'>경기지역화폐 가맹점</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <form method="post" action='/getlist' class="form-inline my-2 my-lg-0">
+                <input type=text style='height: 40px;' class="form-control mr-sm-2" placeholder="지역명">
+                <input type=text style='height: 40px;' class="form-control mr-sm-2" placeholder="상호명">
+                <input type=text style='height: 40px;' class="form-control mr-sm-2" placeholder="업종명">
+                <button type="submit" class='btn btn-primary my-2 mr-sm-0' style='height: 40px;'>확인</button>
+            </form>
+        </div>
+    </nav>
+    <div style="background: #fafdfe; width: 100%; display: inline-flex;">
+        <table class='table'>
+            <thead class="thead-light">
+                <tr>
+                    <th width=5%> 번호 </th> <th width=10%> 시군명 </th> <th width=20%> 상호명 </th> <th width=20%> 업종명 </th> <th> 주소 </th> <th width=10%> 전화번호 </th> <th width=5%> 지도 </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i, v in enumerate(data) %}
+                    <tr>
+                        <th> {{ i+1 }} </th>
+                        <td> {{ v["SIGUN_NM"] }} </td>
+                        <td> {{ v["CMPNM_NM"] }} </td>
+                        <td> {{ v["INDUTYPE_NM"] }} </td>
+                        <td> {{ v["REFINE_ROADNM_ADDR"] }} </td>
+                        <td> {{ v["TELNO"] }} </td>
+                        <td> <button type="submit" style='border: none; background: white;'>
+                            <img src="{{ url_for('static', filename='img/world.jpg') }}" style="width: 23px; height: 23px;">
+                        </button> </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled"> <a class="page-link"> Previous </a> </li>
+                <li class="page-item active" value=1>   <a class="page-link"> 1 </a> </li>
+                <li class="page-item" value=2> <a class="page-link"> 2 </a> </li>
+                <li class="page-item" value=3> <a class="page-link"> 3 </a> </li>
+                <li class="page-item" value=4> <a class="page-link"> 4 </a> </li>
+                <li class="page-item" value=5> <a class="page-link"> 5 </a> </li>
+                <li class="page-item" value=5> <a class="page-link"> 6 </a> </li>
+                <li class="page-item" value=5> <a class="page-link"> 7 </a> </li>
+                <li class="page-item" value=5> <a class="page-link"> 8 </a> </li>
+                <li class="page-item" value=5> <a class="page-link"> 9 </a> </li>
+                <li class="page-item" value=5> <a class="page-link"> 10 </a> </li>
+                <li class="page-item disabled"> <a class="page-link"> Next </a> </li>
+            </ul>
+        </nav>
+    </div>
+</body>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <!-- config -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <title> 경기지역화폐 가맹점 </title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/font.css') }}" rel="stylesheet">
+    <style type="text/css"> .no-drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;} </style>
+    
+    <!-- js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+</head>
+<body class='text-center no-drag'>
+    <table style='height: 100vh; width: 100%; background: lightblue;'>
+        <tbody>
+            <tr>
+                <td class="align-bottom"> <h1 class="display-2" style='font-family: TTTogether;'>경기지역화폐 가맹점</h1> </td>
+            </tr>
+            <tr>
+                <td class="align-top">
+                    <form method="post" action='/getlist'>
+                        <div class="form-row" style='display: inline-flex; height: 40px;' >
+                            <div class="col-md"><input type=text name='SIGUN_NM' style='height: 40px;' class="form-control" placeholder="지역명"></div>
+                            <div class="col-md"><input type=text name='CMPNM_NM' style='height: 40px;' class="form-control" placeholder="상호명"></div>
+                            <div class="col-md"><input type=text name='INDUTYPE_NM' style='height: 40px;' class="form-control" placeholder="업종명"></div>
+                            <button type="submit" class='btn btn-primary' style='height: 40px;'>확인</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
