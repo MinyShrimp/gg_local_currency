@@ -6,30 +6,59 @@
     <meta charset='UTF-8'>
     <title> 경기지역화폐 가맹점 </title>
 
+    <!-- API -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8a0987a28693281e504acffe928cb5b4"></script>
+
     <!-- css -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/font.css') }}" rel="stylesheet">
-    <style type="text/css">
-        .no-drag {
-            -ms-user-select: none;
-            -moz-user-select: -moz-none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            user-select: none;
-        }
-    </style>
+    <style type="text/css"> .no-drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;} </style>
 
     <!-- js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script>
+        var map = 0, lat = 0, logt = 0, nm = '';
+        function load_map(REFINE_WGS84_LAT, REFINE_WGS84_LOGT, CMPNM_NM) {
+            lat  = parseFloat(REFINE_WGS84_LAT);
+            logt = parseFloat(REFINE_WGS84_LOGT);
+            nm   = CMPNM_NM;
+        }
+
+        $(document).ready(function() {
+            $('#myModal').on('shown.bs.modal', function (e) {
+                // map
+                var container = document.getElementById('map');
+                var options = {
+                    center: new kakao.maps.LatLng(lat, logt),
+                    level: 3
+                };
+                map = new kakao.maps.Map(container, options);
+
+                // cursor
+                var markerPosition  = new kakao.maps.LatLng(lat, logt); 
+                var marker = new kakao.maps.Marker({ 
+                    position: markerPosition
+                }); 
+                marker.setMap(map);
+
+                // info windo
+                kakao.maps.event.addListener(marker, 'click', function() {
+                    window.open('https://map.kakao.com/link/map/'+nm+','+lat+','+logt, '_blank'); 
+                });
+            });
+            $('#myModal').on('hide.bs.modal', function (e) {
+                $('#map').empty();
+            });
+        });
+    </script>
 </head>
 
 <body class='text-center no-drag'>
     <nav class="navbar navbar-expand-lg navbar-light sticky-top" style='background: lightblue;'>
-        <div style='font-family: TTTogether; font-size: 2em;'>경기지역화폐 가맹점</div>
+        <a href='/' class="navbar-brand" style='font-family: TTTogether; font-size: 2em;'>경기지역화폐 가맹점</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -62,16 +91,21 @@
                         <td> {{ v["INDUTYPE_NM"] }} </td>
                         <td> {{ v["REFINE_ROADNM_ADDR"] }} </td>
                         <td> {{ v["TELNO"] }} </td>
-                        <td> <button type="submit" style='border: none; background: white;'>
-                            <img src="{{ url_for('static', filename='img/world.jpg') }}" style="width: 23px; height: 23px;">
-                        </button> </td>
+                        <td>
+                        {% if v['REFINE_WGS84_LAT'] %}
+                            <button type="button" onclick="javascript:load_map({{ v['REFINE_WGS84_LAT'] }}, {{ v['REFINE_WGS84_LOGT'] }}, '{{ v['CMPNM_NM'] }}');" style='border: none; background: white;' data-toggle="modal" data-target="#myModal">
+                                <img src="{{ url_for('static', filename='img/world.jpg') }}" style="width: 23px; height: 23px;">
+                            </button> 
+                        {% else %}
+                            <img src="{{ url_for('static', filename='img/world.jpg') }}" style="width: 23px; height: 23px; opacity: 0.5;">
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
     <div>
-        <nav aria-label="Page navigation example">
+        <nav id='page-button'>
             <ul class="pagination justify-content-center">
                 <li class="page-item disabled"> <a class="page-link"> Previous </a> </li>
                 <li class="page-item active" value=1>   <a class="page-link"> 1 </a> </li>
@@ -87,5 +121,17 @@
                 <li class="page-item disabled"> <a class="page-link"> Next </a> </li>
             </ul>
         </nav>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" style='max-width: 800px;'>
+            <div class="modal-content" style='height: 600px;'>
+                <div class="modal-body">
+                    <div id='map' style='width: 100%; height: 98%;'> </div>
+                    <p style='text-align: left;'> ※ 큰 화면으로 보고 싶다면 마커를 클릭하세요. </p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>

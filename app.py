@@ -8,6 +8,7 @@ sigun_cd = 41310
 
 @app.route('/getlist', methods = ["POST", "GET"])
 def get_data():
+    pIndex = 1
     if request.method == 'POST':
         # 지역명
         if request.form['SIGUN_NM']:
@@ -25,24 +26,24 @@ def get_data():
         if request.args.get('pIndex'):
             pIndex = request.args.get('pIndex')
         
-    request_url = "https://openapi.gg.go.kr/RegionMnyFacltStus?KEY={}&Type=json&pIndex=1&pSize=20&SIGUN_CD={}".format(api_key, sigun_cd)
+    request_url = "https://openapi.gg.go.kr/RegionMnyFacltStus?KEY={}&Type=json&pIndex={}&pSize=20&SIGUN_CD={}".format(api_key, pIndex, sigun_cd)
     data = requests.get(request_url)
-    json_data = data.json()
-    return render_template('lists.html', 
-        data = json_data['RegionMnyFacltStus'][1]['row'],
-        enumerate=enumerate, 
-    ), 200
-
-@app.route('/map', methods=["GET"])
-def get_map():
-    return render_template('map.html',
-        REFINE_WGS84_LAT=request.args.get('REFINE_WGS84_LAT'),
-        REFINE_WGS84_LOGT=request.args.get('REFINE_WGS84_LOGT')
-    )
+    
+    try:
+        json_data = data.json()
+        return render_template('lists.html', 
+            data = json_data['RegionMnyFacltStus'][1]['row'],
+            enumerate=enumerate, 
+        ), 200
+    except KeyError:
+        return render_template('lists.html', 
+            data = {},
+            enumerate=enumerate, 
+        ), 200
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
