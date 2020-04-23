@@ -33,6 +33,13 @@ def get_data():
         enumerate=enumerate, 
     ), 200
 
+@app.route('/map', methods=["GET"])
+def get_map():
+    return render_template('map.html',
+        REFINE_WGS84_LAT=request.args.get('REFINE_WGS84_LAT'),
+        REFINE_WGS84_LOGT=request.args.get('REFINE_WGS84_LOGT')
+    )
+
 @app.route('/')
 def index():
     return render_template('index.html')
