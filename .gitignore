@@ -1,2 +1,4 @@
 /__pycache__/
-/tmp/
+/tmp/Local.db
+/tmp/locals.csv
+/tmp/locals.xlsx
