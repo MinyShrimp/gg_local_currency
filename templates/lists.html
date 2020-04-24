@@ -52,6 +52,13 @@
             $('#myModal').on('hide.bs.modal', function (e) {
                 $('#map').empty();
             });
+
+            $('#submit').click(function() {
+                if($("input[name=SIGUN_NM]").val() == '') {
+                    alert('지역명은 필수 입력사항입니다.');
+                    return false;
+                }
+            });
         });
     </script>
 </head>
@@ -68,10 +75,10 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <form method="post" action='/getlist' class="form-inline my-2 my-lg-0">
-                <input type=text style='height: 40px;' class="form-control mr-sm-2" placeholder="지역명">
-                <input type=text style='height: 40px;' class="form-control mr-sm-2" placeholder="상호명">
-                <input type=text style='height: 40px;' class="form-control mr-sm-2" placeholder="업종명">
-                <button type="submit" class='btn btn-primary my-2 mr-sm-0' style='height: 40px;'>확인</button>
+                <input type=text style='height: 40px;' name='SIGUN_NM' class="form-control mr-sm-2" placeholder="지역명">
+                <input type=text style='height: 40px;' name='CMPNM_NM' class="form-control mr-sm-2" placeholder="상호명">
+                <input type=text style='height: 40px;' name='INDUTYPE_NM' class="form-control mr-sm-2" placeholder="업종명">
+                <button type="submit" id='submit' class='btn btn-primary my-2 mr-sm-0' style='height: 40px;'>확인</button>
             </form>
         </div>
     </nav>
@@ -129,7 +136,7 @@
             <div class="modal-content" style='height: 600px;'>
                 <div class="modal-body">
                     <div id='map' style='width: 100%; height: 98%;'> </div>
-                    <p style='text-align: left;'> ※ 큰 화면으로 보고 싶다면 마커를 클릭하세요. </p>
+                    <p style='text-align: left;'> ※ 마커를 클릭하면 카카오 맵으로 이동합니다. </p>
                 </div>
             </div>
         </div>
