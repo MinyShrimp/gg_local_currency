@@ -1,12 +1,9 @@
 import requests
 from flask import Flask, request, jsonify, render_template
-from flask_restful import Api, reqparse
-from pprint import pprint
 
 from module.db import DB
 
 app = Flask(__name__)
-# api_key = "f7d6fedb7da8439f868b7a4730734ce8"
 db = DB()
 
 old_addr        = ''
@@ -46,7 +43,6 @@ def get_data(page):
             int=int
         ), 200
     except Exception as e:
-        print (e, old_cmpnm_nm, old_indutype_nm)
         return render_template('lists.html', 
             data = [],
             page = 1,
@@ -60,4 +56,4 @@ def index():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=80, debug=True)
+    app.run(host='0.0.0.0', port=80)
