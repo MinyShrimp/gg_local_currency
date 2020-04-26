@@ -1,0 +1,19 @@
+@media (max-width: 768px) {
+    h1 {
+        font-size: 60px !important;
+    }
+    .form-control {
+        width: 95%;
+        display: table-cell;
+        padding: 0 auto !important;
+    }
+    .div-md {
+        width: 100%;
+        display: table-cell;
+        padding: 0 auto !important;
+        padding-bottom: 20px !important;
+    }
+    button {
+        width: 93%;
+    }
+} 

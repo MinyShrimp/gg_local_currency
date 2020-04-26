@@ -13,48 +13,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <link href="{{ url_for('static', filename='css/font.css') }}" rel="stylesheet">
     <style type="text/css"> .no-drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;} </style>
-    <style>
-        @media (max-width: 768px) {
-            .form-control {
-                width: 95%;
-                display: table-cell;
-                padding: 0 auto !important;
-            }
-            .div-md {
-                width: 100%;
-                display: table-cell;
-                padding: 0 auto !important;
-                padding-bottom: 20px !important;
-            }
-            #submit {
-                width: 93%;
-            }
-
-            table {
-                display: block;
-            }
-
-            table > *, table tr, table td, table th {
-                display: block;
-            }
-
-            table thead, table tbody tr td:nth-child(1) {
-                display: none;
-            }
-
-            table tbody tr {
-                height: auto;
-                text-align: left;
-                border: 1px solid #999999;
-                margin-bottom: 1em;
-                background: #fcfcfc;
-            }
-            table tbody tr td {
-                border-top: none !important;
-            }
-        } 
-    </style>
-
+    <link href="{{ url_for('static', filename='css/lists.css') }}" rel="stylesheet">
     <!-- js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>

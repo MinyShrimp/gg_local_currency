@@ -1,0 +1,46 @@
+@media (max-width: 768px) {
+    .form-control {
+        width: 95%;
+        display: table-cell;
+        padding: 0 auto !important;
+    }
+
+    .div-md {
+        width: 100%;
+        display: table-cell;
+        padding: 0 auto !important;
+        padding-bottom: 20px !important;
+    }
+
+    #submit {
+        width: 93%;
+    }
+
+    table {
+        display: block;
+    }
+
+    table>*,
+    table tr,
+    table td,
+    table th {
+        display: block;
+    }
+
+    table thead,
+    table tbody tr td:nth-child(1) {
+        display: none;
+    }
+
+    table tbody tr {
+        height: auto;
+        text-align: left;
+        border: 1px solid #999999;
+        margin-bottom: 1em;
+        background: #fcfcfc;
+    }
+
+    table tbody tr td {
+        border-top: none !important;
+    }
+}
