@@ -1,14 +1,14 @@
 ## **사용된 언어**
-|                |                               |
-|----------------|-------------------------------|
-| 언어           | Python, Html, Javascript      |
-| 툴             | Visual Studio Code            |
-| 라이브러리     | Flask, Bootstrap, Jquery      |
-| API            | Kakao Map API, 공공데이터 API |
-| 제작 기간      | 2020-03-23 ~ 진행중           |
-| 제작 인원      | 1명                           |
-| 도움을 받은 곳 | 구글                          |
-| 서비스 한 곳   | -                             |
+|                |                                  |
+|----------------|----------------------------------|
+| 언어           | Python, Html, Javascript         |
+| 툴             | Visual Studio Code               |
+| 라이브러리     | Flask, Bootstrap, Jquery, SQLite |
+| API            | Kakao Map API, 공공데이터 API    |
+| 제작 기간      | 2020-03-23 ~ 진행중              |
+| 제작 인원      | 1명                              |
+| 도움을 받은 곳 | 구글                             |
+| 서비스 한 곳   | -                                |
 
 <br>
 
@@ -23,6 +23,7 @@
 ### **새로 배운점**
 - [Kakao Map API](https://apis.map.kakao.com/)
 - [경기지역화폐 API](https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=3NPA52LBMO36CQEQ1GMY28894927&infSeq=1)
+- SQLite
 
 ### **아쉬운 점**
 진행중
@@ -41,3 +42,14 @@
         - 스타일 시트 폴더
     - /img/
         - 이미지 폴더
+    - /db/
+        - SQLite Database 폴더
+    - /js/
+        - getdata.js
+            - 데이터 검색
+- /module/
+    - db.py
+        - SQLite Database Control Class
+- /tmp/
+    - xlsx_to_sqlite.py
+        - 경기지역화폐 데이터 시트를 SQLite로 Insert 해주는 파일

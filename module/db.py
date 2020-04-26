@@ -34,7 +34,7 @@ class DB:
     ##########################################################################################################
     def get_codes(self, nm):
         _is_success = False
-        rows = ()
+        rows = []
         try:
             self.__connect("Local.db")
             self.cur.execute("select SIGUN_CD from locals where SIGUN_NM like '%{}%'".format(nm))
@@ -45,3 +45,26 @@ class DB:
         finally:
             self.__close()
         return rows, _is_success
+
+    def get_datas(self, cmp_nm, induty_nm, addr, page):
+        _datas = []
+        _count = 0
+        try:
+            self.__connect("Local.db")
+            _limit = (int(page) - 1) * 20
+            self.cur.execute("select ID, SIGUN_NM, CMPNM_NM, INDUTYPE_NM, REFINE_LOTNO_ADDR, TELNO, REFINE_WGS84_LAT, REFINE_WGS84_LOGT from stores where CMPNM_NM like '%{}%' and INDUTYPE_NM like '%{}%' and REFINE_LOTNO_ADDR like '%{}%' LIMIT {}, 20".format(cmp_nm, induty_nm, addr, _limit))
+            _datas = self.cur.fetchall()
+
+            self.cur.execute("select count(*) from stores where CMPNM_NM like '%{}%' and INDUTYPE_NM like '%{}%' and REFINE_LOTNO_ADDR like '%{}%'".format(cmp_nm, induty_nm, addr))
+            _count = self.cur.fetchall()
+            _count = _count[0][0]
+        except Exception as e:
+            print("파일 연결 실패", e)  
+        finally:
+            self.__close()
+        return _datas, _count
+
+if __name__ == "__main__":
+    db = DB()
+    data = db.get_datas('안양', '', '', '', 1)
+    print(type(data), len(data))

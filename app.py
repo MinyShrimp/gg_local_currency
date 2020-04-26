@@ -1,51 +1,58 @@
 import requests
 from flask import Flask, request, jsonify, render_template
+from flask_restful import Api, reqparse
 from pprint import pprint
 
 from module.db import DB
 
 app = Flask(__name__)
-api_key = "f7d6fedb7da8439f868b7a4730734ce8"
+# api_key = "f7d6fedb7da8439f868b7a4730734ce8"
 db = DB()
 
-@app.route('/getlist', methods = ["POST", "GET"])
-def get_data():
-    try:
-        pIndex = 1
-        if request.method == 'POST':
-            # 지역명
-            if request.form['SIGUN_NM']:
-                sigun_nm = request.form['SIGUN_NM']
+old_addr        = ''
+old_cmpnm_nm    = ''
+old_indutype_nm = ''
 
+@app.route('/getlist/<page>', methods = ["POST", "GET"])
+def get_data(page):
+    try:
+        global old_addr
+        global old_cmpnm_nm
+        global old_indutype_nm
+
+        if request.method == 'POST':
+            # 주소
+            addr = request.form['REFINE_LOTNO_ADDR'] if request.form['REFINE_LOTNO_ADDR'] else ''
+            old_addr = addr
+            
             # 상호명
-            if request.form['CMPNM_NM']:
-                cmpnm_nm = request.form['CMPNM_NM']
+            cmpnm_nm = request.form['CMPNM_NM'] if request.form['CMPNM_NM'] else ''
+            old_cmpnm_nm = cmpnm_nm
 
             # 업종명
-            if request.form['INDUTYPE_NM']:
-                indutype_nm = request.form['INDUTYPE_NM']
+            indutype_nm = request.form['INDUTYPE_NM'] if request.form['INDUTYPE_NM'] else ''
+            old_indutype_nm = indutype_nm
 
-            codes, flag = db.get_codes(sigun_nm)
-            code = codes[0][0]
-            if flag == False:
-                return render_template('index.html'), 404
         elif request.method == 'GET':
-            # 페이지
-            if request.args.get('pIndex'):
-                pIndex = request.args.get('pIndex')
-            
-        request_url = "https://openapi.gg.go.kr/RegionMnyFacltStus?KEY={}&Type=json&pIndex={}&pSize=20&SIGUN_CD={}".format(api_key, pIndex, code)
-        data = requests.get(request_url)
-    
-        json_data = data.json()
+            pass
+        
+        data, count = db.get_datas(old_cmpnm_nm, old_indutype_nm, old_addr, page)
+
         return render_template('lists.html', 
-            data = json_data['RegionMnyFacltStus'][1]['row'],
+            data = data,
+            page = int(page),
+            len_page = int(count/20+1),
             enumerate=enumerate, 
+            int=int
         ), 200
-    except:
+    except Exception as e:
+        print (e, old_cmpnm_nm, old_indutype_nm)
         return render_template('lists.html', 
-            data = {},
+            data = [],
+            page = 1,
+            len_page = 1,
             enumerate=enumerate, 
+            int=int
         ), 200
 
 @app.route('/')

@@ -9,37 +9,51 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <link href="{{ url_for('static', filename='css/font.css') }}" rel="stylesheet">
     <style type="text/css"> .no-drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;} </style>
+    <style>
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 60px !important;
+            }
+            .form-control {
+                width: 95%;
+                display: table-cell;
+                padding: 0 auto !important;
+            }
+            .div-md {
+                width: 100%;
+                display: table-cell;
+                padding: 0 auto !important;
+                padding-bottom: 20px !important;
+            }
+            button {
+                width: 93%;
+            }
+        } 
+    </style>
     
     <!-- js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#submit').click(function() {
-                if($("input[name=SIGUN_NM]").val() == '') {
-                    alert('지역명은 필수 입력사항입니다.');
-                    return false;
-                }
-            });
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/getdata.js') }}"></script>
 </head>
 <body class='text-center no-drag'>
     <table style='height: 100vh; width: 100%; background: lightblue;'>
         <tbody>
             <tr style='height: 50%;'>
-                <td class="align-bottom"> <h1 class="display-2" style='font-family: TTTogether;'>경기지역화폐 가맹점</h1> </td>
+                <td class="align-bottom"> 
+                    <h1 class='display-2' style='font-family: TTTogether;'>경기지역화폐 가맹점</h1> 
+                </td>
             </tr>
             <tr>
                 <td class="align-top">
-                    <form method="post" action='/getlist'>
+                    <form method="post" action='/getlist/1'>
                         <div class="form-row" style='display: inline-flex; height: 40px;' >
-                            <div class="col-md"><input type=text name='SIGUN_NM' style='height: 40px;' class="form-control" placeholder="지역명"></div>
-                            <div class="col-md"><input type=text name='CMPNM_NM' style='height: 40px;' class="form-control" placeholder="상호명"></div>
-                            <div class="col-md"><input type=text name='INDUTYPE_NM' style='height: 40px;' class="form-control" placeholder="업종명"></div>
-                            <button type="submit" id='submit' class='btn btn-primary' style='height: 40px;'>확인</button>
+                            <div class="col-md div-md"><input type=text name='REFINE_LOTNO_ADDR' style='height: 40px;' class="form-control" placeholder="주소 (ex. 안양, 안양시)"></div>
+                            <div class="col-md div-md"><input type=text name='CMPNM_NM' style='height: 40px;' class="form-control" placeholder="상호명"></div>
+                            <div class="col-md div-md"><input type=text name='INDUTYPE_NM' style='height: 40px;' class="form-control" placeholder="업종명"></div>
+                            <div class="div-md"><button type="submit" id='submit' class='btn btn-primary' style='height: 40px;'>확인</button></div>
                         </div>
                     </form>
                 </td>
