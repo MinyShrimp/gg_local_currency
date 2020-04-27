@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset='UTF-8'>
     <title> 경기지역화폐 가맹점 </title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <!-- API -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8a0987a28693281e504acffe928cb5b4"></script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=b7imkm67am"></script>
 
     <!-- css -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <link href="{{ url_for('static', filename='css/font.css') }}" rel="stylesheet">
-    <style type="text/css"> .no-drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;} </style>
     <link href="{{ url_for('static', filename='css/lists.css') }}" rel="stylesheet">
     <!-- js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    
     <script src="{{ url_for('static', filename='js/getdata.js') }}"></script>
     <script>
         var map = 0, lat = 0, logt = 0, nm = '';
@@ -30,32 +32,58 @@
 
         $(document).ready(function() {
             //////////////////////////////////////////////////////////////////////////
-            // 카카오 맵
+            // 네이버 맵
             //////////////////////////////////////////////////////////////////////////
             $('#myModal').on('shown.bs.modal', function (e) {
                 // map
-                var container = document.getElementById('map');
-                var options = {
-                    center: new kakao.maps.LatLng(lat, logt),
-                    level: 3
-                };
-                map = new kakao.maps.Map(container, options);
+                var map = new naver.maps.Map('map', {
+                    center: new naver.maps.LatLng(lat, logt),
+                    zoom: 16
+                });
 
-                // cursor
-                var markerPosition  = new kakao.maps.LatLng(lat, logt); 
-                var marker = new kakao.maps.Marker({ 
-                    position: markerPosition
-                }); 
-                marker.setMap(map);
+                // marker
+                var marker = new naver.maps.Marker({
+                    position: map.getCenter(),
+                    map: map
+                });
 
-                // info windo
-                kakao.maps.event.addListener(marker, 'click', function() {
-                    window.open('https://map.kakao.com/link/map/'+nm+','+lat+','+logt, '_blank'); 
+                // event
+                var listener = naver.maps.Event.addDOMListener(marker.getElement(), 'click', function() {
+                    url = 'http://map.naver.com/index.nhn?enc=utf8&level=2&lng='+ logt +'&lat='+ lat +'&pinTitle='+nm+'&pinType=SITE';
+                    window.open(url, '_blank');
                 });
             });
             $('#myModal').on('hide.bs.modal', function (e) {
                 $('#map').empty();
             });
+
+            //////////////////////////////////////////////////////////////////////////
+            // 카카오 맵
+            //////////////////////////////////////////////////////////////////////////
+            //$('#myModal').on('shown.bs.modal', function (e) {
+            //    // map
+            //    var container = document.getElementById('map');
+            //    var options = {
+            //        center: new kakao.maps.LatLng(lat, logt),
+            //        level: 3
+            //    };
+            //    map = new kakao.maps.Map(container, options);
+            //
+            //    // cursor
+            //    var markerPosition  = new kakao.maps.LatLng(lat, logt); 
+            //    var marker = new kakao.maps.Marker({ 
+            //        position: markerPosition
+            //    }); 
+            //    marker.setMap(map);
+            //
+            //    // info window
+            //    kakao.maps.event.addListener(marker, 'click', function() {
+            //        window.open('https://map.kakao.com/link/map/'+nm+','+lat+','+logt, '_blank'); 
+            //    });
+            //});
+            //$('#myModal').on('hide.bs.modal', function (e) {
+            //    $('#map').empty();
+            //});
 
             //////////////////////////////////////////////////////////////////////////
             // 페이징 처리
@@ -147,7 +175,7 @@
             <div class="modal-content" style='height: 600px;'>
                 <div class="modal-body">
                     <div id='map' style='width: 100%; height: 98%;'> </div>
-                    <p style='text-align: left;'> ※ 마커를 클릭하면 카카오 맵으로 이동합니다. </p>
+                    <p style='text-align: left;'> ※ 마커를 클릭하면 네이버 맵으로 이동합니다. </p>
                 </div>
             </div>
         </div>

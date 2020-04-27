@@ -1,4 +1,13 @@
 import sqlite3
+import re
+
+def is_regular(_strs):
+    p = re.compile('SELECT|UPDATE|UNION|DELETE|INSERT|WHERE|HAVING|OR|COMMIT', re.I)
+    for _ in _strs:
+        if p.search(_) != None:
+            return False
+    else:
+        return True
 
 DB_PATH = './static/db'
 class DB:
@@ -49,6 +58,9 @@ class DB:
     def get_datas(self, cmp_nm, induty_nm, addr, page):
         _datas = []
         _count = 0
+        if is_regular([cmp_nm, induty_nm, addr]) is False:
+            return _datas, _count
+        
         try:
             self.__connect("Local.db")
             _limit = (int(page) - 1) * 20
