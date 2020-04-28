@@ -2,4 +2,6 @@
 /tmp/Local.db
 /tmp/locals.csv
 /tmp/locals.xlsx
-/static/db/Local.db
+/static/db/*
+/.https
+/.well-known

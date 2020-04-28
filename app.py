@@ -1,6 +1,8 @@
 import requests
 import os
-from flask import Flask, request, jsonify, render_template, make_response, send_from_directory
+import base64
+
+from flask import Flask, request, jsonify, render_template, make_response, send_from_directory, redirect
 from Crypto.Cipher import AES
 from module.db import DB
 
@@ -10,6 +12,17 @@ db = DB()
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/.well-known/acme-challenge/<txt>')
+def set_ssl(txt):
+    if txt == 'loVjT5k1cerC6k35D1j21rWExix-ifbZmWgsLcozlNs' or txt == 'wpNbgc-02DLX2okHZT6WMJXAMK59pvo6CGlQe3ETE8I':
+        return txt+".CSLTO52_zs-CfKdIgnsblX01wl2xaZ_tKn7VDhSFx8g"
+    else:
+        return redirect('/')
+
+@app.route('/static/db/<txt>')
+def fuck_off(txt):
+    return redirect('/')
 
 @app.route('/getlist/<page>', methods = ["POST", "GET"])
 def get_data(page):
@@ -28,13 +41,14 @@ def get_data(page):
             addr = request.cookies.get('REFINE_LOTNO_ADDR')
             cmpnm_nm = request.cookies.get('CMPNM_NM')
             indutype_nm = request.cookies.get('INDUTYPE_NM')
-        
+
         data, count = db.get_datas(cmpnm_nm, indutype_nm, addr, page)
 
         resp = make_response(render_template('lists.html', 
             data = data,
             page = int(page),
             len_page = int(count/20+1),
+            cookies = (cmpnm_nm, indutype_nm, addr, page),
             enumerate=enumerate, 
             int=int
         ))
@@ -50,6 +64,7 @@ def get_data(page):
             data = [],
             page = 1,
             len_page = 1,
+            cookies = (),
             enumerate=enumerate, 
             int=int
         ), 200
@@ -59,4 +74,5 @@ def index():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=80, debug=True)
+    #app.run(host='127.0.0.1', port=80, debug=True)
+    app.run(host='0.0.0.0', port=443, ssl_context=('./.https/.certificate.crt', './.https/.private.key'))

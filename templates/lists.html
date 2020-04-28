@@ -12,7 +12,7 @@
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=b7imkm67am"></script>
 
     <!-- css -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <link href="{{ url_for('static', filename='css/font.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/lists.css') }}" rel="stylesheet">
     <!-- js -->
@@ -112,6 +112,13 @@
             $('.pagination li').click(function(){
                 if($(this).attr('class').indexOf('disabled') == -1) { location.href = '/getlist/'+this.value; }
             });
+
+            //////////////////////////////////////////////////////////////////////////
+            // 후 처리
+            //////////////////////////////////////////////////////////////////////////
+            $("input[name=CMPNM_NM]").val("{{ cookies[0] }}");
+            $("input[name=INDUTYPE_NM]").val("{{ cookies[1] }}");
+            $("input[name=REFINE_LOTNO_ADDR]").val("{{ cookies[2] }}");
         });
     </script>
 </head>
