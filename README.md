@@ -1,14 +1,14 @@
 ## **사용된 언어**
-|                |                                              |
-|----------------|----------------------------------------------|
-| 언어           | Python, Html, Javascript                     |
-| 툴             | Visual Studio Code                           |
-| 라이브러리     | Flask, Bootstrap, Jquery, SQLite             |
-| API            | Naver Map API, Kakao Map API, 공공데이터 API |
-| 제작 기간      | 2020-04-23 ~ 진행중                          |
-| 제작 인원      | 1명                                          |
-| 도움을 받은 곳 | 구글                                         |
-| 서비스 한 곳   | Google Cloud Platform                        |
+|                |                                                |
+|----------------|------------------------------------------------|
+| 언어           | Python, Html, Javascript                       |
+| 툴             | Visual Studio Code                             |
+| 라이브러리     | Flask, Bootstrap, Jquery, SQLite               |
+| API            | Naver Map API, Kakao Map API, 공공데이터 API   |
+| 제작 기간      | 2020-04-23 ~ 진행중                            |
+| 제작 인원      | 1명                                            |
+| 도움을 받은 곳 | 구글                                           |
+| 서비스 한 곳   | [Google Cloud Platform](https://www.gfind.kr/) |
 
 <br>
 
@@ -26,6 +26,8 @@
 - [경기지역화폐 API](https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=3NPA52LBMO36CQEQ1GMY28894927&infSeq=1)
 - SQLite
 - robots.txt
+- https와 ssl 인증
+- [도메인 구매](https://www.dotname.co.kr/)
 
 ### **아쉬운 점**
 진행중
