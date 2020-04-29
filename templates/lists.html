@@ -23,11 +23,13 @@
     
     <script src="{{ url_for('static', filename='js/getdata.js') }}"></script>
     <script>
-        var map = 0, lat = 0, logt = 0, nm = '';
-        function load_map(REFINE_WGS84_LAT, REFINE_WGS84_LOGT, CMPNM_NM) {
+        var map = 0, lat = 0, logt = 0, nm = '', addr = '', phone = '';
+        function load_map(REFINE_WGS84_LAT, REFINE_WGS84_LOGT, CMPNM_NM, REFINE_LOTNO_ADDR, TELNO) {
             lat = parseFloat(REFINE_WGS84_LAT);
             logt = parseFloat(REFINE_WGS84_LOGT);
             nm = CMPNM_NM;
+            addr = REFINE_LOTNO_ADDR;
+            phone = TELNO;
         }
 
         $(document).ready(function() {
@@ -46,7 +48,7 @@
                     position: map.getCenter(),
                     map: map
                 });
-
+                
                 // event
                 var listener = naver.maps.Event.addDOMListener(marker.getElement(), 'click', function() {
                     url = 'http://map.naver.com/index.nhn?enc=utf8&level=2&lng='+ logt +'&lat='+ lat +'&pinTitle='+nm+'&pinType=SITE';
@@ -123,7 +125,7 @@
     </script>
 </head>
 
-<body class='text-center no-drag' style='background: #fafdfe;'>
+<body class='text-center' style='background: #fafdfe; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select: none;'>
     <nav class="navbar navbar-expand-lg navbar-light sticky-top" style='background: lightblue;'>
         <a href='/' class="navbar-brand" style='font-family: TTTogether; font-size: 2em;'>경기지역화폐 가맹점</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -155,7 +157,7 @@
                 <tbody>
                     {% for i, v in enumerate(data) %}
                         {% if v[6] != 'None' %}
-                        <tr onclick="javascript:load_map({{ v[6] }}, {{ v[7] }}, '{{ v[2] }}');" style="cursor:pointer;" data-toggle="modal" data-target="#myModal" >
+                        <tr onclick="javascript:load_map({{ v[6] }}, {{ v[7] }}, '{{ v[2] }}', '{{ v[4] }}', '{{ v[5] }}');" style="cursor:pointer;" data-toggle="modal" data-target="#myModal" >
                         {% else %}
                         <tr>
                         {% endif %}

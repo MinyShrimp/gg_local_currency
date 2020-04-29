@@ -1,4 +1,5 @@
-import sqlite3
+#import sqlite3
+import pymysql
 import re
 
 def is_regular(_strs):
@@ -24,14 +25,23 @@ class DB:
         self.db = None
         self.db_name = ""
     
-    def __connect(self, name):
-        if self.db != None:
-            print("이미 연결되어 있습니다! - {}".format(self.db_name))
-            raise KeyError
-        
-        self.db_name = name
-        self.db = sqlite3.connect( "{}/{}".format(DB_PATH, name) )
-        self.cur = self.db.cursor()
+    #def __connect(self, name):
+    def __connect(self):
+        while True:
+            if self.db == None:
+                #self.db_name = name
+                #self.db = sqlite3.connect( "{}/{}".format(DB_PATH, name) )
+                self.db = pymysql.connect(
+                    host= '35.229.221.45',
+                    port=3306,
+                    user='root',
+                    passwd='alsl1203',
+                    db='Local',
+                    charset='utf8'
+                )
+                self.cur = self.db.cursor()
+
+                return True
     
     def __close(self):
         if self.db != None:
@@ -45,7 +55,8 @@ class DB:
         _is_success = False
         rows = []
         try:
-            self.__connect("Local.db")
+            #self.__connect("Local.db")
+            self.__connect()
             self.cur.execute("select SIGUN_CD from locals where SIGUN_NM like '%{}%'".format(nm))
             rows = self.cur.fetchall()
             _is_success = True
@@ -62,7 +73,8 @@ class DB:
             return _datas, _count
         
         try:
-            self.__connect("Local.db")
+            #self.__connect("Local.db")
+            self.__connect()
             _limit = (int(page) - 1) * 20
             self.cur.execute("select ID, SIGUN_NM, CMPNM_NM, INDUTYPE_NM, REFINE_LOTNO_ADDR, TELNO, REFINE_WGS84_LAT, REFINE_WGS84_LOGT from stores where CMPNM_NM like '%{}%' and INDUTYPE_NM like '%{}%' and REFINE_LOTNO_ADDR like '%{}%' LIMIT {}, 20".format(cmp_nm, induty_nm, addr, _limit))
             _datas = self.cur.fetchall()
@@ -78,5 +90,5 @@ class DB:
 
 if __name__ == "__main__":
     db = DB()
-    data = db.get_datas('안양', '', '', '', 1)
-    print(type(data), len(data))
+    data = db.get_datas('안양', '', '', 1)
+    print(type(data[0]), data[1])

@@ -9,14 +9,6 @@ from module.db import DB
 app = Flask(__name__)
 db = DB()
 
-@app.before_request
-def before_request():
-    scheme = request.headers.get('X-Forwarded-Proto')
-    if scheme and scheme == 'http' and request.url.startswith('http://'):
-        url = request.url.replace('http://', 'https://', 1)
-        code = 301
-        return redirect(url, code=code)
-
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
@@ -31,6 +23,10 @@ def set_ssl(txt):
 @app.route('/static/db/<txt>')
 def fuck_off(txt):
     return redirect('/')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html')
 
 @app.route('/getlist/<page>', methods = ["POST", "GET"])
 def get_data(page):

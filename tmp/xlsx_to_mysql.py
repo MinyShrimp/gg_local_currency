@@ -1,15 +1,28 @@
 import openpyxl
-import sqlite3
+#import sqlite3
+import pymysql
 
 if __name__ == "__main__":
+    print('Open Xlsx...')
     book = openpyxl.load_workbook('./locals.xlsx')
     sheet = book.worksheets[0]
-    
+    print('Open Xlsx Complete')
+
     cols = ["SIGUN_NM", "CMPNM_NM", "INDUTYPE_NM", "REFINE_ROADNM_ADDR", "REFINE_LOTNO_ADDR", "TELNO", "REFINE_ZIP_CD", "REFINE_WGS84_LAT", "REFINE_WGS84_LOGT"]
 
-    db = sqlite3.connect( "./Local.db" )
+    print('Connect DB...')
+    db = pymysql.connect(
+        host= '35.229.221.45',
+        port=3306,
+        user='root',
+        passwd='alsl1203',
+        db='Local',
+        charset='utf8'
+    )
     cur = db.cursor()
+    print('Connect DB Complete')
 
+    print('Insert DB...')
     _fl = False
     for row in sheet.rows:
         if _fl == True:
@@ -21,3 +34,4 @@ if __name__ == "__main__":
             _fl = True
     db.commit()
     db.close()
+    print('Insert DB Complete')

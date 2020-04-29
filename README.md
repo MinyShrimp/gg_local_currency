@@ -3,7 +3,7 @@
 |----------------|------------------------------------------------|
 | 언어           | Python, Html, Javascript                       |
 | 툴             | Visual Studio Code                             |
-| 라이브러리     | Flask, Bootstrap, Jquery, SQLite               |
+| 라이브러리     | Flask, Bootstrap, Jquery, SQLite, MySQL        |
 | API            | Naver Map API, Kakao Map API, 공공데이터 API   |
 | 제작 기간      | 2020-04-23 ~ 진행중                            |
 | 제작 인원      | 1명                                            |
@@ -24,7 +24,7 @@
 - [Naver Map API](https://navermaps.github.io/maps.js.ncp/docs/index.html)
 - [Kakao Map API](https://apis.map.kakao.com/)
 - [경기지역화폐 API](https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=3NPA52LBMO36CQEQ1GMY28894927&infSeq=1)
-- SQLite
+- SQLite => MySQL로 변경 ( 동시 접속을 위함 )
 - robots.txt
 - https와 ssl 인증
 - [도메인 구매](https://www.dotname.co.kr/)
@@ -48,6 +48,7 @@
         - 스타일 시트 폴더
     - /db/
         - SQLite Database 폴더
+        - [2020-04-29 동시 접속 문제로 삭제] : MySQL로 대체
     - /js/
         - getdata.js
             - 데이터 검색
