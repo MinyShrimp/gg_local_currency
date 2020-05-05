@@ -3,6 +3,7 @@
 /tmp/locals.csv
 /tmp/locals.xlsx
 /tmp/Error.xlsx
+~*
 /static/db/*
 /.https
 /.well-known

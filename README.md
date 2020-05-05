@@ -56,5 +56,7 @@
     - db.py
         - SQLite Database Control Class
 - /tmp/
-    - xlsx_to_sqlite.py
+    - xlsx_to_sqlite.py (삭제됨)
         - 경기지역화폐 데이터 시트를 SQLite로 Insert 해주는 파일
+    - xtm.py
+        - SQLite 데이터를 MySQL로 Insert 해주는 파일
