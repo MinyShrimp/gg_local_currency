@@ -5,7 +5,7 @@
 | 툴             | Visual Studio Code                             |
 | 라이브러리     | Flask, Bootstrap, Jquery, SQLite, MySQL        |
 | API            | Naver Map API, Kakao Map API, 공공데이터 API   |
-| 제작 기간      | 2020-04-23 ~ 진행중                            |
+| 제작 기간      | 2020-04-23 ~ 2020-05-02                            |
 | 제작 인원      | 1명                                            |
 | 도움을 받은 곳 | 구글                                           |
 | 서비스 한 곳   | [Google Cloud Platform](https://www.gfind.kr/) |
